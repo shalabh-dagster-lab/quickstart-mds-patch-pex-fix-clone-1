@@ -7,8 +7,9 @@ concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 env:
-  DAGSTER_CLOUD_URL: ${{ secrets.DAGSTER_CLOUD_URL }}
+  DAGSTER_CLOUD_URL: "http://shalabh-test-dbt-pex-fix.dogfood.dagster.cloud"
   DAGSTER_CLOUD_API_TOKEN: ${{ secrets.DAGSTER_CLOUD_API_TOKEN }}
+  ENABLE_FAST_DEPLOYS: 'true'
 
 jobs:
   dagster_cloud_default_deploy:
@@ -16,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       build_info: ${{ steps.parse-workspace.outputs.build_info }}
-
+    
     steps:
       - name: Parse cloud workspace
         if: env.ENABLE_FAST_DEPLOYS != 'true'
@@ -31,7 +32,7 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
           path: project-repo
-
+          
       - name: Build and deploy Python executable
         if: env.ENABLE_FAST_DEPLOYS == 'true'
         uses: dagster-io/dagster-cloud-action/actions/build_deploy_python_executable@pex-v0.1
@@ -66,3 +67,4 @@ jobs:
           organization_id: ${{ secrets.ORGANIZATION_ID }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
