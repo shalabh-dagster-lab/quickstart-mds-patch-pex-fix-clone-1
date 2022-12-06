@@ -11,7 +11,7 @@ concurrency:
 env:
   DAGSTER_CLOUD_URL: "http://shalabh-test-dbt-pex-fix.dogfood.dagster.cloud"
   DAGSTER_CLOUD_API_TOKEN: ${{ secrets.DAGSTER_CLOUD_API_TOKEN }}
-
+  SERVERLESS_BASE_IMAGE: "878483074102.dkr.ecr.us-west-2.amazonaws.com/dagster-cloud-serverless-base-py3.8:1.1.5-pex-files-dir"
 jobs:
   dagster_cloud_default_deploy:
     name: Dagster Serverless Deploy
